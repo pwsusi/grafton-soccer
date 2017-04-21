@@ -14,7 +14,7 @@ restService.get('/test', function (req, res) {
             source: 'grafton-soccer-webhook'
         });
 
-}
+};
 restService.post('/hook', function (req, res) {
 
     console.log('hook request');
