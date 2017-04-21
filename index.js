@@ -113,9 +113,9 @@ restService.post('/game', function(req, res) {
 
             var location;
             if(nextGame.location === undefined){
-                opponent = 'somewhere I\'m not sure about';
+                location = 'somewhere I\'m not sure about';
             }else{
-                opponent = nextGame.location;
+                location = nextGame.location;
             }
 
             speech = "Your next game is " + outDate + " against "  + opponent + " and is scheduled to be played at " + location;
