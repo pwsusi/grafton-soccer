@@ -73,20 +73,30 @@ var games = [
     {date: new Date( 2017, 3, 15, 16, 20 ), opponent: 'Worcester', location: 'Away field'},
 ];
 
-restService.get('/game', function(req, res) {
+restService.post('/game', function(req, res) {
     //req.body.result && req.body.result.parameters && req.body.result.parameters.echoText
 
-    if(req.body.result.parameters.action === 'when'){
-        var speech = 'You don\'t have any games left';
-        var nextGame = getNextGame();
-        if(nextGame.date !== undefined){
-            var options = {
-                weekday: "long", year: "numeric", month: "short",
-                day: "numeric", hour: "2-digit", minute: "2-digit"
-            };
+    var options = {
+        weekday: "long", year: "numeric", month: "short",
+        day: "numeric", hour: "2-digit", minute: "2-digit"
+    };
 
+    var nextGame = getNextGame();
+    var speech = 'There was an unexpected error';
+    if(nextGame === undefined){
+        speech = 'You don\'t have any games left';
+    }
+    else{
+       if(req.body.result.parameters.action === 'when'){
             var outDate = nextGame.date.toLocaleTimeString("en-us", options);
             speech = "Your next game is " + outDate;
+        }else if(req.body.result.parameters.action === 'who'){
+            speech = "Your next game is against " + nextGame.opponent;
+        }else if(req.body.result.parameters.action === 'where'){
+            speech = "Your next game is scheduled to be played at " + nextGame.location;
+        }else{
+            var outDate = nextGame.date.toLocaleTimeString("en-us", options);
+            speech = "Your next game is " + outDate + " against "  + nextGame.opponent + " and is scheduled to be played at " + nextGame.location;
         }
     }
     return res.json({
