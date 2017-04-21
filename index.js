@@ -68,39 +68,50 @@ restService.post('/hook', function (req, res) {
     }
 });
 
-restService.post('/game', function(req, res) {
+var games = [
+    {date: new Date( 2017, 6, 15, 16, 20 ), opponent: 'Shrewsbury', location: 'Lyon\'s field'},
+    {date: new Date( 2017, 3, 15, 16, 20 ), opponent: 'Worcester', location: 'Away field'},
+];
+
+restService.get('/game', function(req, res) {
     //req.body.result && req.body.result.parameters && req.body.result.parameters.echoText
 
-    var date1 = new Date( 2017, 6, 15, 16, 20 );
+    if(req.body.result.parameters.action === 'when'){
+        var speech = 'You don\'t have any games left';
+        var nextGame = getNextGame();
+        if(nextGame.date !== undefined){
+            var options = {
+                weekday: "long", year: "numeric", month: "short",
+                day: "numeric", hour: "2-digit", minute: "2-digit"
+            };
+
+            var outDate = nextGame.date.toLocaleTimeString("en-us", options);
+            speech = "Your next game is " + outDate;
+        }
+    }
+    return res.json({
+            speech: speech,
+            displayText: speech,
+            source: 'grafton-soccer-webhook'
+        });
+});
+
+function getNextGame(){
     var startDate = new Date();
     var startTime = +startDate;
     var nearestDate, nearestDiff = Infinity;
-
-    var dates = [date1];
-
-    for( var i = 0, n = dates.length;  i < n;  ++i ) {
-        var diff = +dates[i] - startTime;
+    var nextGame;
+    for( var i = 0, n = games.length;  i < n;  ++i ) {
+        var date = games[i].date;
+        var diff = +date - startTime;
         if( diff > 0  &&  diff < nearestDiff ) {
             nearestDiff = diff;
-            nearestDate = dates[i];
+            nearestDate = date;
+            nextGame = games[i];
         }
     }
-
-    var options = {
-        weekday: "long", year: "numeric", month: "short",
-        day: "numeric", hour: "2-digit", minute: "2-digit"
-    };
-
-    var outDate = date1.toLocaleTimeString("en-us", options);
-
-    var speech = "Your next game is " + outDate;
-    return res.json({
-        speech: speech,
-        displayText: speech,
-        source: 'grafton-soccer-webhook'
-    });
-});
-
+    return nextGame;
+};
 
 restService.listen((process.env.PORT || 5000), function () {
     console.log("Server listening");
