@@ -71,7 +71,29 @@ restService.post('/hook', function (req, res) {
 restService.post('/game', function(req, res) {
     //req.body.result && req.body.result.parameters && req.body.result.parameters.echoText
 
-    var speech = "Your next game is on Saturday"
+    var date1 = new Date( 2017, 6, 15, 16, 20 );
+    var startDate = new Date();
+    var startTime = +startDate;
+    var nearestDate, nearestDiff = Infinity;
+
+    var dates = [date1];
+
+    for( var i = 0, n = dates.length;  i < n;  ++i ) {
+        var diff = +dates[i] - startTime;
+        if( diff > 0  &&  diff < nearestDiff ) {
+            nearestDiff = diff;
+            nearestDate = dates[i];
+        }
+    }
+
+    var options = {
+        weekday: "long", year: "numeric", month: "short",
+        day: "numeric", hour: "2-digit", minute: "2-digit"
+    };
+
+    var outDate = date1.toLocaleTimeString("en-us", options);
+
+    var speech = "Your next game is " + outDate;
     return res.json({
         speech: speech,
         displayText: speech,
