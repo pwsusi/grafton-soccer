@@ -104,12 +104,14 @@ restService.post('/game', function(req, res) {
             }
         }else{
             var outDate = nextGame.date.toLocaleTimeString("en-us", options);
+            var opponent;
             if(nextGame.opponent === undefined){
                 opponent = 'some team I\'m not sure about';
             }else{
                 opponent = nextGame.opponent;
             }
 
+            var location;
             if(nextGame.location === undefined){
                 opponent = 'somewhere I\'m not sure about';
             }else{
