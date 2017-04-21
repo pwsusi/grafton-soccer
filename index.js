@@ -92,7 +92,7 @@ restService.post('/game', function(req, res) {
             speech = "Your next game is " + outDate;
         }else if(req.body.result.parameters.action === 'who'){
             if(nextGame.opponent === undefined){
-                speech = ''I\'m sorry, I\'m not sure who you\'re playing against';
+                speech = 'I\'m sorry, I\'m not sure who you\'re playing against';
             }else{
                 speech = "Your next game is against " + nextGame.opponent;
             }
