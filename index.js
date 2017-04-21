@@ -71,7 +71,7 @@ restService.post('/hook', function (req, res) {
 restService.post('/game', function(req, res) {
     //req.body.result && req.body.result.parameters && req.body.result.parameters.echoText
 
-    var speech = "Your next game is on Saturday/"
+    var speech = "Your next game is on Saturday"
     return res.json({
         speech: speech,
         displayText: speech,
