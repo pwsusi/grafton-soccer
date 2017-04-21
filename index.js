@@ -7,6 +7,14 @@ const bodyParser = require('body-parser');
 const restService = express();
 restService.use(bodyParser.json());
 
+restService.get('/test', function (req, res) {
+  return res.json({
+            speech: "hello speech",
+            displayText: "hello text",
+            source: 'grafton-soccer-webhook'
+        });
+
+}
 restService.post('/hook', function (req, res) {
 
     console.log('hook request');
