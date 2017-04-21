@@ -77,7 +77,7 @@ var events = [
 restService.post('/event', function(req, res) {
     //req.body.result && req.body.result.parameters && req.body.result.parameters.echoText
 
-    var speech = 'There was an unexpected error. I donn\'t know if you\'re asking about a practice or a game'';
+    var speech = 'There was an unexpected error. I donn\'t know if you\'re asking about a practice or a game';
     if(req.body.result.parameters.requestType === 'game'){
         speech = handleGameRequest(req);
     }else if(req.body.result.parameters.requestType === 'practice'){
