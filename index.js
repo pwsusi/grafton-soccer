@@ -91,12 +91,32 @@ restService.post('/game', function(req, res) {
             var outDate = nextGame.date.toLocaleTimeString("en-us", options);
             speech = "Your next game is " + outDate;
         }else if(req.body.result.parameters.action === 'who'){
-            speech = "Your next game is against " + nextGame.opponent;
+            if(nextGame.opponent === undefined){
+                speech = ''I\'m sorry, I\'m not sure who you\'re playing against';
+            }else{
+                speech = "Your next game is against " + nextGame.opponent;
+            }
         }else if(req.body.result.parameters.action === 'where'){
-            speech = "Your next game is scheduled to be played at " + nextGame.location;
+            if(nextGame.location === undefined){
+                speech = 'I\'m sorry, I\'m not sure where you\'re playing';
+            }else{
+                speech = "Your next game is scheduled to be played at " + nextGame.location;
+            }
         }else{
             var outDate = nextGame.date.toLocaleTimeString("en-us", options);
-            speech = "Your next game is " + outDate + " against "  + nextGame.opponent + " and is scheduled to be played at " + nextGame.location;
+            if(nextGame.opponent === undefined){
+                opponent = 'some team I\'m not sure about';
+            }else{
+                opponent = nextGame.opponent;
+            }
+
+            if(nextGame.location === undefined){
+                opponent = 'somewhere I\'m not sure about';
+            }else{
+                opponent = nextGame.location;
+            }
+
+            speech = "Your next game is " + outDate + " against "  + opponent + " and is scheduled to be played at " + location;
         }
     }
     return res.json({
