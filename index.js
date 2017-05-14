@@ -71,7 +71,7 @@ restService.post('/hook', function (req, res) {
 var events = [
     {date: new Date( 2017, 4, 20, 11, 00 ), opponent: 'Dudley', location: 'Riverview field', type: 'game'},
     {date: new Date( 2017, 6, 3, 11, 00 ), opponent: 'DASC', location: 'Riverview field', type: 'game'},
-    {date: new Date( 2017, 4, 10, 13, 00 ), opponent: 'Oxford', location: 'Ruel Field; 27 Locust Street, Oxford', type: 'game'}
+    {date: new Date( 2017, 4, 10, 13, 00 ), opponent: 'Oxford', location: 'Ruel Field 27 Locust Street Oxford', type: 'game'}
 ];
 
 restService.post('/event', function(req, res) {
